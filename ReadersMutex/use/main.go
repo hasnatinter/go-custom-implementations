@@ -38,10 +38,10 @@ func ReportLogs(logsList *[]CustomLog, rm *ReadersMutex.RMutex) {
 		rm.ReadLock()
 		if processedCount != len(*logsList) {
 			copiedLogs := ExtractNewLogs(*logsList, processedCount)
+			processedCount = len(*logsList)
 			for _, log := range copiedLogs {
 				fmt.Printf("%d - %s: %s\n", processedCount, log.level, log.message)
 			}
-			processedCount = len(*logsList)
 		}
 		rm.ReadUnlock()
 		time.Sleep(ReadersWait)
@@ -54,12 +54,12 @@ func ReportErrorLogs(logsList *[]CustomLog, rm *ReadersMutex.RMutex) {
 		rm.ReadLock()
 		if processedCount != len(*logsList) {
 			copiedLogs := ExtractNewLogs(*logsList, processedCount)
+			processedCount = len(*logsList)
 			for _, log := range copiedLogs {
 				if log.level == "Error" {
 					fmt.Printf("%d - ***An error log*** %s: %s\n", processedCount, log.level, log.message)
 				}
 			}
-			processedCount = len(*logsList)
 		}
 		rm.ReadUnlock()
 		time.Sleep(ReadersWait)
