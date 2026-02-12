@@ -32,43 +32,43 @@ func GenerateLogs(logsList *[]CustomLog, rm *ReadersMutex.RMutex) {
 	}
 }
 
-func ReportLogs(cLog *[]CustomLog, rm *ReadersMutex.RMutex) {
-	total := 0
+func ReportLogs(logsList *[]CustomLog, rm *ReadersMutex.RMutex) {
+	processedCount := 0
 	for {
 		rm.ReadLock()
-		if total != len(*cLog) {
-			copiedLogs := ExtractLogs(*cLog, total)
+		if processedCount != len(*logsList) {
+			copiedLogs := ExtractNewLogs(*logsList, processedCount)
 			for _, log := range copiedLogs {
-				fmt.Printf("%d - %s: %s\n", total, log.level, log.message)
+				fmt.Printf("%d - %s: %s\n", processedCount, log.level, log.message)
 			}
-			total = len(*cLog)
+			processedCount = len(*logsList)
 		}
 		rm.ReadUnlock()
 		time.Sleep(ReadersWait)
 	}
 }
 
-func ReportErrorLogs(cLog *[]CustomLog, rm *ReadersMutex.RMutex) {
-	total := 0
+func ReportErrorLogs(logsList *[]CustomLog, rm *ReadersMutex.RMutex) {
+	processedCount := 0
 	for {
 		rm.ReadLock()
-		if total != len(*cLog) {
-			copiedLogs := ExtractLogs(*cLog, total)
+		if processedCount != len(*logsList) {
+			copiedLogs := ExtractNewLogs(*logsList, processedCount)
 			for _, log := range copiedLogs {
 				if log.level == "Error" {
-					fmt.Printf("%d - ***An error log*** %s: %s\n", total, log.level, log.message)
+					fmt.Printf("%d - ***An error log*** %s: %s\n", processedCount, log.level, log.message)
 				}
 			}
-			total = len(*cLog)
+			processedCount = len(*logsList)
 		}
 		rm.ReadUnlock()
 		time.Sleep(ReadersWait)
 	}
 }
 
-func ExtractLogs(cLog []CustomLog, total int) []CustomLog {
+func ExtractNewLogs(cLog []CustomLog, processedCount int) []CustomLog {
 	copiedCLog := make([]CustomLog, 0)
-	for i := total; i < len(cLog); i++ {
+	for i := processedCount; i < len(cLog); i++ {
 		copiedCLog = append(copiedCLog, cLog[i])
 	}
 	return copiedCLog
