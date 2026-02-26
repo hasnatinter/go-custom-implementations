@@ -15,7 +15,7 @@ type CustomLog struct {
 	message string
 }
 
-func GenerateUsereLogs(logsList *[]CustomLog, wm *Writersmutex.WPMutex) {
+func GenerateUserLogs(logsList *[]CustomLog, wm *Writersmutex.WPMutex) {
 	sampleLogs := [5]CustomLog{
 		{level: "Info", message: "A new user logged-in"},
 		{level: "Warn", message: "User entered incorrect credentials"},
@@ -94,6 +94,6 @@ func main() {
 	readerMutex := Writersmutex.New()
 	go ReportLogs(&logsList, readerMutex)
 	go ReportErrorLogs(&logsList, readerMutex)
-	go GenerateUsereLogs(&logsList, readerMutex)
+	go GenerateUserLogs(&logsList, readerMutex)
 	GenerateRequestLogs(&logsList, readerMutex)
 }
