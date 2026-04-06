@@ -1,0 +1,1 @@
+Meeting at 3pm with design team about the new dashboard. Remember to review the API changes before that. Need to follow up with Maria about the database migration. The production incident last week was caused by a race condition in the auth service. We should add more integration tests.

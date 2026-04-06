@@ -1,0 +1,1 @@
+Hey team, the deployment is scheduled for Tuesday at 10 AM UTC. Please ensure all tests are passing before then. The staging environment has been updated with the latest changes. Let me know if you see any issues. Thanks for everyone's hard work on this release.

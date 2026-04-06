@@ -1,0 +1,5 @@
+2024-01-15T10:23:45Z INFO  Starting server on port 8080
+2024-01-15T10:23:46Z INFO  Database connection established
+2024-01-15T10:24:01Z WARN  Slow query detected: SELECT * FROM users WHERE last_login > NOW() - INTERVAL '7 days'
+2024-01-15T10:25:30Z ERROR Failed to process request: connection timeout
+2024-01-15T10:26:00Z INFO  Shutting down gracefully

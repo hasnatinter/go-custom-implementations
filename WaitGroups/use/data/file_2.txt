@@ -1,0 +1,8 @@
+func processRequest(ctx context.Context, req *Request) error {
+    // Validate input parameters
+    // Check rate limiting
+    // Authenticate user
+    // Fetch data from cache
+    // If cache miss, query database
+    // Return response or error
+}
