@@ -17,16 +17,18 @@ func (wg *WGroup) Add(delta uint) {
 }
 
 func (wg *WGroup) Done() {
+	wg.cond.L.Lock()
+	defer wg.cond.L.Unlock()
+
 	if wg.groupSize == 0 {
 		panic("Done() called more times than Add()")
 	}
-	wg.cond.L.Lock()
+
 	wg.groupSize--
 	if wg.groupSize == 0 {
 		// Broadcast since more than routines might be waiting
 		wg.cond.Broadcast()
 	}
-	wg.cond.L.Unlock()
 }
 
 func (wg *WGroup) Wait() {
